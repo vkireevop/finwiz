@@ -21,7 +21,7 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private Banks bank;
-
+    private String currency;
     private BigDecimal balance;
 
     // Геттеры и сеттеры
