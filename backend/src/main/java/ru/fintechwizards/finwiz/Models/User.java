@@ -20,8 +20,17 @@ public class User implements UserDetails {
 
   @Column(name = "username")
   private String username;
+
+  @Column(name = "password")
+  private String password;
+
   public User() {
 
+  }
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
   }
 
 
@@ -32,32 +41,32 @@ public class User implements UserDetails {
 
   @Override
   public String getPassword() {
-    return null;
+    return password;
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return username;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 
   public Long getId() {
@@ -66,5 +75,9 @@ public class User implements UserDetails {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

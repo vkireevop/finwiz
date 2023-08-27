@@ -1,14 +1,14 @@
 package ru.fintechwizards.finwiz.Security;
 
 import com.nimbusds.jwt.SignedJWT;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import java.text.ParseException;
 import java.time.Instant;
-import java.util.stream.Collectors;
+
 import ru.fintechwizards.finwiz.Models.User;
 
 public class TokenService {
@@ -22,7 +22,6 @@ public class TokenService {
 
   public String generateAccessToken(User usrDetails) {
     Instant now = Instant.now();
-
     JwtClaimsSet claims = JwtClaimsSet.builder()
         .issuer("self")
         .issuedAt(now)
