@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   database:
-    image: postgres:13.3
+    image: postgres:15.4
     environment:
       POSTGRES_PASSWORD: sample
       POSTGRES_USER: sample
@@ -12,8 +12,8 @@ services:
   backend:
     image: client
     build:
-      context: .
-      dockerfile: \backend\Dockerfile
+      context: \backend\
+      dockerfile: Dockerfile
     ports:
       - "8888:8888"
     depends_on:
@@ -23,3 +23,13 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database/sample
       - SPRING_DATASOURCE_USERNAME=sample
       - SPRING_DATASOURCE_PASSWORD=sample
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
