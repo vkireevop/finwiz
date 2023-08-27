@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import java.text.ParseException;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 import ru.fintechwizards.finwiz.Models.User;
 
@@ -23,15 +22,11 @@ public class TokenService {
 
   public String generateAccessToken(User usrDetails) {
     Instant now = Instant.now();
-    String scope = usrDetails.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.joining(" "));
 
     JwtClaimsSet claims = JwtClaimsSet.builder()
         .issuer("self")
         .issuedAt(now)
         .subject(usrDetails.getUsername())
-        .claim("scope", scope)
         .build();
     return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
