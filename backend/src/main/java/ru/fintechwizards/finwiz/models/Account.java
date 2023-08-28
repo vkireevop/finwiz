@@ -24,7 +24,12 @@ public class Account {
     private String currency;
     private BigDecimal balance;
 
-    // Геттеры и сеттеры
+    public void debit(BigDecimal amount) {
+        balance = balance.subtract(amount);
+    }
+    public void credit(BigDecimal amount) {
+        balance = balance.add(amount);
+    }
 }
 
 

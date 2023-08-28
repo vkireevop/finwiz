@@ -3,7 +3,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "banks")
 public class Bank {
 
@@ -12,13 +11,13 @@ public class Bank {
     private Long bankId;
 
     private String name;
-    private String address;
+    private String country;
 
     public Bank() {}
 
     public Bank(String name, String address) {
         this.name = name;
-        this.address = address;
+        this.country = address;
     }
 
     public Long getBankId() {
@@ -34,10 +33,10 @@ public class Bank {
     }
 
     public String getAddress() {
-        return address;
+        return country;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.country = address;
     }
 }
