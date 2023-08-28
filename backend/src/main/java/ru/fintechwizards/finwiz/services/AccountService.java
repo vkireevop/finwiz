@@ -29,6 +29,10 @@ public class AccountService {
         return accRepo.findAll();
     }
 
+    public List<Account> findAccountsByUserId(Long id) {
+        List<Account> accountList = accRepo.findAllByUser(id);
+        return accountList;
+    }
 
     public AccountResponse createAccount(Account account) {
         accRepo.save(account);
