@@ -7,8 +7,8 @@ import ru.fintechwizards.finwiz.models.Account;
 public class TransactionRequest {
   private String currencyStart;
   private String currencyFinal;
-  private Account senderAccount;
-  private Account receiverAccount;
+  private Long senderAccount;
+  private Long receiverAccount;
 
   private BigDecimal amount;
   private Date date;
@@ -17,7 +17,7 @@ public class TransactionRequest {
   public TransactionRequest() {}
 
   public TransactionRequest(String currencyStart, String currencyFinal,
-      Account senderAccount, Account receiverAccount, BigDecimal amount, Date date,
+      Long senderAccount, Long receiverAccount, BigDecimal amount, Date date,
       String description) {
     this.currencyStart = currencyStart;
     this.currencyFinal = currencyFinal;
@@ -44,19 +44,19 @@ public class TransactionRequest {
     this.currencyFinal = currencyFinal;
   }
 
-  public Account getSenderAccount() {
+  public Long getSenderAccount() {
     return senderAccount;
   }
 
-  public void setSenderAccount(Account senderAccount) {
+  public void setSenderAccount(Long senderAccount) {
     this.senderAccount = senderAccount;
   }
 
-  public Account getReceiverAccount() {
+  public Long getReceiverAccount() {
     return receiverAccount;
   }
 
-  public void setReceiverAccount(Account receiverAccount) {
+  public void setReceiverAccount(Long receiverAccount) {
     this.receiverAccount = receiverAccount;
   }
 

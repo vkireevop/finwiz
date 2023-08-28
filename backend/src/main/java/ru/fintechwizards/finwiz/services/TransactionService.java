@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Account;
 import ru.fintechwizards.finwiz.models.Transaction;
 import ru.fintechwizards.finwiz.repositories.AccountRepository;
@@ -23,6 +24,8 @@ public class TransactionService {
     private final TransactionRepository transactionRep;
     private final AccountRepository accountRepository;
     @Autowired
+    private AccountService accountService;
+    @Autowired
     public TransactionService (TransactionRepository transactionRep, AccountRepository accountRepository)
     {
         this.transactionRep = transactionRep;
@@ -37,29 +40,32 @@ public class TransactionService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void makeTransaction(TransactionRequest request) throws IOException {
-        Account senderAccount = request.getSenderAccount();
-        Account receiverAccount = request.getReceiverAccount();
-        String currencyStart = senderAccount.getCurrency();
-        String currencyFinal = receiverAccount.getCurrency();
+        Optional<Account> senderAccount = accountService.findById(request.getSenderAccount());
+        Optional<Account> receiverAccount = accountService.findById(request.getSenderAccount());
+        if (senderAccount.isEmpty() && receiverAccount.isEmpty()) {
+            throw new NotFoundException("Account not found");
+        }
+        String currencyStart = senderAccount.get().getCurrency();
+        String currencyFinal = receiverAccount.get().getCurrency();
         BigDecimal amount = request.getAmount();
         Date date = request.getDate();
         String description = request.getDescription();
         Transaction transaction = new Transaction(request.getCurrencyStart(),request.getCurrencyFinal(),
-                request.getSenderAccount(),request.getReceiverAccount(),
+                senderAccount.get(),receiverAccount.get(),
                 request.getAmount(),request.getDate(),request.getDescription());
         if (currencyFinal.equals(currencyStart))
         {
-            senderAccount.debit(amount);
-            receiverAccount.credit(amount);
+            senderAccount.get().debit(amount);
+            receiverAccount.get().credit(amount);
         }
         else {
-            senderAccount.debit(amount);
+            senderAccount.get().debit(amount);
             float rateStart = CurrencyService.getExchangeRate(currencyStart);
             float rateFinal = CurrencyService.getExchangeRate(currencyFinal);
-            receiverAccount.credit(amount.divide(BigDecimal.valueOf(rateStart)).multiply(BigDecimal.valueOf(rateFinal)));
+            receiverAccount.get().credit(amount.divide(BigDecimal.valueOf(rateStart)).multiply(BigDecimal.valueOf(rateFinal)));
         }
         transactionRep.save(transaction);
-        accountRepository.save(senderAccount);
-        accountRepository.save(receiverAccount);
+        accountRepository.save(senderAccount.get());
+        accountRepository.save(receiverAccount.get());
     }
 }

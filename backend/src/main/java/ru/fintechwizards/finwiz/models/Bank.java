@@ -1,6 +1,5 @@
 package ru.fintechwizards.finwiz.models;
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table(name = "banks")

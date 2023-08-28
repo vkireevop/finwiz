@@ -1,5 +1,7 @@
 package ru.fintechwizards.finwiz.controllers;
 
+import java.math.BigDecimal;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fintechwizards.finwiz.models.Account;
+import ru.fintechwizards.finwiz.models.Bank;
 import ru.fintechwizards.finwiz.models.User;
 import ru.fintechwizards.finwiz.repositories.UserJpaRepository;
 import ru.fintechwizards.finwiz.requests.AuthRequest;
 import ru.fintechwizards.finwiz.responses.AuthResponse;
+import ru.fintechwizards.finwiz.responses.BankResponse;
 import ru.fintechwizards.finwiz.security.TokenService;
+import ru.fintechwizards.finwiz.services.AccountService;
+import ru.fintechwizards.finwiz.services.BanksService;
 import ru.fintechwizards.finwiz.services.MyUserDetailsService;
 import ru.fintechwizards.finwiz.services.UserService;
 
@@ -41,6 +47,12 @@ public class AuthController {
   @Autowired
   private MyUserDetailsService myUserDetailsService;
 
+  @Autowired
+  private AccountService accountService;
+
+  @Autowired
+  private BanksService banksService;
+
   @PostMapping("/auth/login")
   public ResponseEntity<AuthResponse> auth(@RequestBody AuthRequest authRequest) {
     String username = authRequest.getUsername();
@@ -58,7 +70,7 @@ public class AuthController {
   }
 
   @PostMapping("auth/signup")
-  public ResponseEntity<AuthResponse> signup(@RequestBody AuthRequest authRequest) {
+  public ResponseEntity<Object> signup(@RequestBody AuthRequest authRequest) {
     String username = authRequest.getUsername();
     String password = authRequest.getPassword();
 
@@ -70,9 +82,18 @@ public class AuthController {
 
     User user = new User(username, bCryptPasswordEncoder.encode(password));
     String accessToken = tokenService.generateAccessToken(user);
-    // TODO: NEW ACCOUNT WHEN USER IS CREATED WITH 0 BALANCE
+
     userService.saveUser(user);
-    return new ResponseEntity<>(new AuthResponse("Success", accessToken), HttpStatus.OK);
+    Optional<Bank> bank = banksService.findById(Long.valueOf(1));
+    if (bank.isPresent()) {
+      Account account = new Account(user, bank.get(), "RUB",
+          BigDecimal.valueOf(0));
+      accountService.createAccount(account);
+      return new ResponseEntity<>(new AuthResponse("Success", accessToken), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
+    }
+
   }
 
 
