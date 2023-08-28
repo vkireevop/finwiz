@@ -8,7 +8,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
-import ru.fintechwizards.finwiz.exceptions.CurrencyNotFoundException;
+import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 
 @Service
 public class CurrencyService {
@@ -42,6 +42,6 @@ public class CurrencyService {
       }
     }
 
-    throw new CurrencyNotFoundException();
+    throw new NotFoundException("Currency not found");
   }
 }

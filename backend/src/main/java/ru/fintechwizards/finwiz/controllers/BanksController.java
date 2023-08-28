@@ -11,56 +11,53 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fintechwizards.finwiz.exceptions.AlreadyExistsException;
+import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Bank;
 import ru.fintechwizards.finwiz.repositories.BankJpaRepository;
 import ru.fintechwizards.finwiz.repositories.BankRepository;
 import ru.fintechwizards.finwiz.requests.BankRequest;
 import ru.fintechwizards.finwiz.responses.BankResponse;
+import ru.fintechwizards.finwiz.services.BanksService;
 
 @RestController
 @CrossOrigin
 public class BanksController {
+
   @Autowired
-  private BankRepository bankRepository;
-  @Autowired
-  private BankJpaRepository bankJpaRepository;
+  private BanksService banksService;
+
   @PostMapping("/banks/create")
-  public ResponseEntity<String> createNewBank(@RequestBody BankRequest req) {
-    String name = req.getName();
-    String address = req.getAddress();
-    if (bankJpaRepository.findByName(name).isPresent()) {
-      return new ResponseEntity<>("Bank already exists", HttpStatus.SERVICE_UNAVAILABLE);
+  public ResponseEntity<Object> createNewBank(@RequestBody BankRequest req) {
+    try {
+      return ResponseEntity.ok(banksService.createBank(req));
+    } catch (AlreadyExistsException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
     }
-    bankRepository.save(new Bank(name, address));
-    return ResponseEntity.ok("Success");
   }
 
   @GetMapping("/banks/all")
   public ResponseEntity<List<Bank>> listAllBanks() {
-    return new ResponseEntity<>(bankRepository.findAll(), HttpStatus.OK);
+    return new ResponseEntity<>(banksService.getAllBanks(), HttpStatus.OK);
   }
 
   @GetMapping("/banks/get/{id}")
   public ResponseEntity<Object> getBankById(@PathVariable("id") Long id) {
-    Optional<Bank> bank = bankRepository.findById(id);
-    if (bank.isPresent()) {
-      Bank bankEntity = bank.get();
-      return new ResponseEntity<>(new BankResponse(bankEntity.getBankId(),
-          bankEntity.getName(),
-          bankEntity.getAddress()), HttpStatus.OK);
+    try {
+      BankResponse bankResponse = banksService.getBankById(id);
+      return ResponseEntity.ok(bankResponse);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
   @GetMapping("/banks/get/{name}")
   public ResponseEntity<Object> getBankByName(@PathVariable("name") String name) {
-    Optional<Bank> bank = bankJpaRepository.findByName(name);
-    if (bank.isPresent()) {
-      Bank bankEntity = bank.get();
-      return new ResponseEntity<>(new BankResponse(bankEntity.getBankId(),
-          bankEntity.getName(),
-          bankEntity.getAddress()), HttpStatus.OK);
+    try {
+      BankResponse bankResponse = banksService.getBankByName(name);
+      return ResponseEntity.ok(bankResponse);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ru.fintechwizards.finwiz.exceptions.CurrencyNotFoundException;
+import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.services.CurrencyService;
 
 @RestController
@@ -18,7 +18,7 @@ public class CurrencyController {
     try {
       float result = CurrencyService.getExchangeRate(code);
       return ResponseEntity.ok(result);
-    } catch (CurrencyNotFoundException e) {
+    } catch (NotFoundException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
   }

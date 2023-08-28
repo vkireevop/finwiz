@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.fintechwizards.finwiz.models.Account;
 import ru.fintechwizards.finwiz.models.User;
 import ru.fintechwizards.finwiz.repositories.UserJpaRepository;
 import ru.fintechwizards.finwiz.requests.AuthRequest;
@@ -69,7 +70,7 @@ public class AuthController {
 
     User user = new User(username, bCryptPasswordEncoder.encode(password));
     String accessToken = tokenService.generateAccessToken(user);
-
+    // TODO: NEW ACCOUNT WHEN USER IS CREATED WITH 0 BALANCE
     userService.saveUser(user);
     return new ResponseEntity<>(new AuthResponse("Success", accessToken), HttpStatus.OK);
   }
