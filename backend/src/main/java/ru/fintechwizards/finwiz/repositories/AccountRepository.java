@@ -13,10 +13,5 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long > {
     Optional<Account> findById(Long id);
-    @Modifying
-    @Query("UPDATE Account t SET t.balance = t.balance - :amount WHERE t.accountId = :id")
-    void downBalanceById(@Param("id")Long id, @Param("amount")BigDecimal amount);
-    @Modifying
-    @Query("UPDATE Account t SET t.balance = t.balance + :amount where t.accountId = :id")
-    void upBalanceById(@Param("id") Long id, @Param("amount") BigDecimal amount);
+
 }

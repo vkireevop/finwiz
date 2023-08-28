@@ -42,11 +42,10 @@ public class TransactionService {
         String currencyStart = senderAccount.getCurrency();
         String currencyFinal = receiverAccount.getCurrency();
         BigDecimal amount = request.getAmount();
-        Date date = request.getDate();
-        String description = request.getDescription();
         Transaction transaction = new Transaction(request.getCurrencyStart(),request.getCurrencyFinal(),
                 request.getSenderAccount(),request.getReceiverAccount(),
                 request.getAmount(),request.getDate(),request.getDescription());
+
         if (currencyFinal.equals(currencyStart))
         {
             senderAccount.debit(amount);
