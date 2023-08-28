@@ -1,4 +1,4 @@
-FROM maven:3.9.3-amazoncorretto-20 as builder
+FROM maven:3.9.3-amazoncorretto-20 AS builder
 
 WORKDIR /app
 

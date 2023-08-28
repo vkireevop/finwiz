@@ -3,7 +3,7 @@ package ru.fintechwizards.finwiz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import ru.fintechwizards.finwiz.Security.RsaProperties;
+import ru.fintechwizards.finwiz.security.RsaProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(RsaProperties.class)
