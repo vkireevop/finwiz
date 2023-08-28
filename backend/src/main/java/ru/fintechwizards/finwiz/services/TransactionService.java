@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fintechwizards.finwiz.models.Account;
 import ru.fintechwizards.finwiz.models.Transaction;
@@ -34,7 +35,7 @@ public class TransactionService {
         return transactionRep.findAllBySenderId(id);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void makeTransaction(TransactionRequest request) throws IOException {
         Account senderAccount = request.getSenderAccount();
         Account receiverAccount = request.getReceiverAccount();
