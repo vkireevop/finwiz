@@ -80,20 +80,9 @@ public class AuthController {
 
     User user = new User(username, bCryptPasswordEncoder.encode(password));
     String accessToken = tokenService.generateAccessToken(user);
-
     userService.saveUser(user);
     Optional<Bank> bank = banksService.findById(Long.valueOf(1));
-    if (bank.isPresent()) {
-      Account account = new Account(user, bank.get(), "RUB",
-          BigDecimal.valueOf(0));
-      accountService.createAccount(account);
       return new ResponseEntity<>(new AuthResponse("Success", accessToken), HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
-    }
-
   }
-
-
 }
 

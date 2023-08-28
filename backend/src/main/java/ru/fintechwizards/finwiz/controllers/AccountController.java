@@ -2,6 +2,7 @@ package ru.fintechwizards.finwiz.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
+import ru.fintechwizards.finwiz.requests.AccountRequest;
 import ru.fintechwizards.finwiz.requests.DepositMoneyRequest;
 import ru.fintechwizards.finwiz.services.AccountService;
 
@@ -29,10 +32,10 @@ public class AccountController {
     return ResponseEntity.ok(json);
   }
 
-  // TODO
   @PostMapping("/account/create")
-  public ResponseEntity<String> createAccount() {
-      return ResponseEntity.ok("");
+  public ResponseEntity<String> createAccount(@RequestBody AccountRequest request) {
+    accountService.createAccount(request);
+    return ResponseEntity.ok("OK");
   }
   @PostMapping("/account/deposit")
   public ResponseEntity<?> addMoney(@RequestBody DepositMoneyRequest request) {
