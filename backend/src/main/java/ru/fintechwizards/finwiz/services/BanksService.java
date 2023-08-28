@@ -44,16 +44,6 @@ public class BanksService {
         }
         throw new NotFoundException("Bank not found");
     }
-    public BankResponse getBankByName(String name) {
-        Optional<Bank> bank = bankJpaRepository.findByName(name);
-        if (bank.isPresent()) {
-            Bank bankEntity = bank.get();
-            return new BankResponse(bankEntity.getBankId(),
-                bankEntity.getName(),
-                bankEntity.getAddress());
-        }
-        throw new NotFoundException("Bank not found");
-    }
 
 
     public BankResponse createBank(BankRequest request) {
