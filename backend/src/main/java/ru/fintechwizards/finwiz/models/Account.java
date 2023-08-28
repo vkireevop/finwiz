@@ -3,6 +3,7 @@ package ru.fintechwizards.finwiz.models;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import ru.fintechwizards.finwiz.exceptions.NotEnoughException;
 
 @Entity
 @Table(name = "accounts")
@@ -68,6 +69,9 @@ public class Account {
     }
 
     public void debit(BigDecimal amount) {
+        if (balance.subtract(amount).compareTo(BigDecimal.valueOf(0)) < 0) {
+            throw new NotEnoughException("Not enough money");
+        }
         balance = balance.subtract(amount);
     }
     public void credit(BigDecimal amount) {

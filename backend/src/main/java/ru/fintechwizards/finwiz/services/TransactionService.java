@@ -2,12 +2,12 @@ package ru.fintechwizards.finwiz.services;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.fintechwizards.finwiz.exceptions.NotEnoughException;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Account;
 import ru.fintechwizards.finwiz.models.Transaction;
@@ -39,7 +39,7 @@ public class TransactionService {
     }
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void makeTransaction(TransactionRequest request) throws IOException {
+    public void makeTransaction(TransactionRequest request) throws IOException, NotEnoughException {
         Optional<Account> senderAccount = accountService.findById(request.getSenderAccount());
         Optional<Account> receiverAccount = accountService.findById(request.getReceiverAccount());
         if (senderAccount.isEmpty() || receiverAccount.isEmpty()) {
