@@ -51,13 +51,4 @@ public class BanksController {
     }
   }
 
-  @GetMapping("/banks/get/{name}")
-  public ResponseEntity<Object> getBankByName(@PathVariable("name") String name) {
-    try {
-      BankResponse bankResponse = banksService.getBankByName(name);
-      return ResponseEntity.ok(bankResponse);
-    } catch (NotFoundException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-  }
 }
