@@ -29,6 +29,7 @@ public class AccountService {
         return accRepo.findAll();
     }
 
+
     public AccountResponse createAccount(Account account) {
         accRepo.save(account);
         return new AccountResponse(account.getAccountId(),
@@ -39,10 +40,10 @@ public class AccountService {
         Long accountId = request.getAccountId();
         BigDecimal amount = request.getAmount();
 
-        accRepo.upBalanceById(accountId, amount);
-
         Optional<Account> account = accRepo.findById(accountId);
         if (account.isPresent()) {
+            account.get().credit(amount);
+            accRepo.save(account.get());
             return new AccountResponse(accountId, account.get().getUser(), account.get().getBank(),
                 account.get().getCurrency(), account.get().getBalance());
         }

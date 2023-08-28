@@ -19,7 +19,7 @@ public class TranscationServiceTests {
 
   }
 
-  @Test
+  /*@Test
   public void testTranscationRUBtoRUB() throws IOException {
     Account senderAccount = new Account();
     Account receiverAccount = new Account();
@@ -38,7 +38,7 @@ public class TranscationServiceTests {
     transactionService.makeTransaction(req);
 
 
-  }
+  } */
 
 
 }

@@ -41,7 +41,7 @@ public class TransactionService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void makeTransaction(TransactionRequest request) throws IOException {
         Optional<Account> senderAccount = accountService.findById(request.getSenderAccount());
-        Optional<Account> receiverAccount = accountService.findById(request.getSenderAccount());
+        Optional<Account> receiverAccount = accountService.findById(request.getReceiverAccount());
         if (senderAccount.isEmpty() && receiverAccount.isEmpty()) {
             throw new NotFoundException("Account not found");
         }
