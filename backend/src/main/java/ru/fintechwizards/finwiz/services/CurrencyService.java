@@ -9,13 +9,14 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
+import ru.fintechwizards.finwiz.enums.currencies;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
-
 @Service
 public class CurrencyService {
 
@@ -54,6 +55,11 @@ public class CurrencyService {
   }
 
   public static Map<String, Float> getAllRates() throws IOException {
+    currencies[] curs = currencies.values();
+    HashSet<String> supportedCurrencies = new HashSet<>();
+    for (var currency: curs) {
+      supportedCurrencies.add(currency.toString());
+    }
     Map<String, Float> result = new TreeMap<>();
     URL url = new URL(API_URL);
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -75,7 +81,10 @@ public class CurrencyService {
       kurs = kurs.replace(',', '.');
       float rate = Float.parseFloat(kurs) / Integer.parseInt(nominal);
 
-      result.put(charCode, rate);
+      if (supportedCurrencies.contains(charCode)) {
+        result.put(charCode, rate);
+      }
+
 
     }
     return result;
