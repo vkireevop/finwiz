@@ -2,8 +2,6 @@ package ru.fintechwizards.finwiz.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.fintechwizards.finwiz.exceptions.AlreadyExistsException;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
@@ -12,6 +10,7 @@ import ru.fintechwizards.finwiz.repositories.BankJpaRepository;
 import ru.fintechwizards.finwiz.repositories.BankRepository;
 
 import java.util.Optional;
+
 import ru.fintechwizards.finwiz.requests.BankRequest;
 import ru.fintechwizards.finwiz.responses.BankResponse;
 
