@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.fintechwizards.finwiz.models.Account;
+import ru.fintechwizards.finwiz.models.User;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long > {
     Optional<Account> findById(Long id);
+    @Query("SELECT u FROM Account u WHERE u.user.id = :id")
     List<Account> findAllByUser(Long id);
 
 }

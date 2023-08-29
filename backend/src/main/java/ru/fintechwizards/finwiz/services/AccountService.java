@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Account;
+import ru.fintechwizards.finwiz.models.User;
 import ru.fintechwizards.finwiz.repositories.AccountRepository;
 
 import java.util.Optional;
