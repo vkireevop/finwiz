@@ -8,13 +8,16 @@ import {
 
 import { Link } from '@react-navigation/native';
 
-import { Input } from '../components';
+import { Input, CustomCheckBox } from '../components';
 
 const RegisterScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Log In</Text>
+            <Text style={styles.text}>Sign Up</Text>
             <View style={styles.form}>
+                <Input 
+                    placeholder='Name'
+                />
                 <Input 
                     placeholder='Email'
                     inputMode='email'
@@ -24,12 +27,16 @@ const RegisterScreen = () => {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
+                <View style={styles.confrim__container}>
+                    <CustomCheckBox />
+                    <Text>I would like to receive your newsletter.</Text>
+                </View>
             </View>
             <TouchableOpacity style={styles.button}>
-                <Text style={styles.button__text}>Log In</Text>
+                <Text style={styles.button__text}>Sign Up</Text>
             </TouchableOpacity>
             <Text style={styles.text_bottom}>
-                Don’t have an account? 
+                Already have an account?
                 <Link to={'/Login'}> Sign In</Link>
             </Text>
         </SafeAreaView>
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
     form: {
         marginTop: 32,
         gap: 15,
-        paddingBottom: 160,
+        paddingBottom: 60,
     },
     text: {
         fontSize: 30,
@@ -71,6 +78,11 @@ const styles = StyleSheet.create({
         color: '#5DB097',
         textAlign: 'center',
         marginTop: 20,
+    },
+    confrim__container: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 })
 

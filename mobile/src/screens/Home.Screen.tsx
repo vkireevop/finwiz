@@ -8,9 +8,35 @@ import {
     FlatList,
 } from 'react-native';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+import { RootState } from '../api/store';
+import { useLazyUserQuery } from '../api/service/auth.service';
+import { useLazyGetAccountsQuery } from '../api/service/transaction.service';
 import { TranstactionNode } from '../components';
+import { updateUser } from '../api/slice/auth.slice';
  
 const HomeScreen = ({ navigation: { navigate } }) => {
+    const dispatch = useDispatch();
+    const [accounts, setAccounts] = useState([]);
+
+    const [getUser] = useLazyUserQuery();
+    const [getAccounts] = useLazyGetAccountsQuery({});
+
+    const user = useSelector((state: RootState) => state.authSlice);
+
+    useEffect(() => {
+        const getData = async () => {
+            const { data } = await getUser({});
+            const { data: accounts } = await getAccounts({});
+            setAccounts(accounts)
+            dispatch(updateUser({data}));
+        }
+        getData()
+    }, [])
+
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.info__container}>
@@ -31,13 +57,13 @@ const HomeScreen = ({ navigation: { navigate } }) => {
                         />
                         <Text style={styles.action__text}>Receive</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.action__wrapper}>
+                    <TouchableOpacity style={styles.action__wrapper} onPress={() => navigate('Buy', {})}>
                         <Image
                             source={require('../assets/buy.png')}
                         />
                         <Text style={styles.action__text}>Buy</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.action__wrapper}>
+                    <TouchableOpacity style={styles.action__wrapper} onPress={() => navigate('Swap', {})}>
                         <Image
                             source={require('../assets/swap.png')}
                         />
@@ -45,6 +71,9 @@ const HomeScreen = ({ navigation: { navigate } }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <TouchableOpacity style={styles.button} onPress={() => navigate('Account')}>
+                <Text style={styles.button__text}>Create Account</Text>
+            </TouchableOpacity>
             <FlatList
                 data={[
                     { account: '№423493240243', date: '28.08.2023', amount: '9345,35 RUB' },
@@ -114,6 +143,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 14,
         color: '#4B947E'
+    },
+    button: {
+        width: '80%',
+        paddingVertical: 16,
+        borderRadius: 100,
+        backgroundColor: '#5DB097',
+        marginVertical: 15,
+        alignSelf: 'center',
+    },
+    button__text: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center'
     },
     
 })

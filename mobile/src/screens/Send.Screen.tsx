@@ -5,15 +5,42 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
+
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { BarCodeReadEvent } from 'react-native-camera';
 import { SelectList } from 'react-native-dropdown-select-list'
 
 import { Input } from '../components';
 
 const SendScreen = () => {
     const [selected, setSelected] = useState("");
+
+    const [showScaner, setShowScaner] = useState<boolean>(false);
+
+    const handleQrCode = (qr_data: BarCodeReadEvent) => {
+        let { data } = qr_data
+        data = JSON.parse(data)
+        Alert.alert('New Qr-Code', data.account)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
+            {
+                showScaner && (
+                    <View style={styles.qr_overlay__container}>
+                        <QRCodeScanner
+                            onRead={handleQrCode}
+                            bottomContent={
+                                <TouchableOpacity style={styles.buttonQrClose} onPress={() => setShowScaner(false)}>
+                                    <Text style={styles.button__text}>Close</Text>
+                                </TouchableOpacity>
+                            }
+                        />
+                    </View>
+                )
+            }
             <View style={styles.form}>
                 <Input 
                     placeholder='Recipient adress'
@@ -37,10 +64,13 @@ const SendScreen = () => {
                         }
                     }
                 />
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.button__text}>Send</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => setShowScaner(true)}>
+                    <Text style={styles.button__text}>Scan Qr-Code</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.button__text}>Send</Text>
-            </TouchableOpacity>
         </SafeAreaView>
     )
 };
@@ -69,19 +99,27 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: '#5DB097'
     },
+    buttonQrClose: {
+        paddingHorizontal: 70,
+        paddingVertical: 16,
+        borderRadius: 100,
+        marginTop: 35,
+        backgroundColor: '#5DB097'
+    },
     button__text: {
         color: '#fff',
         fontSize: 16,
         fontWeight: '600',
         textAlign: 'center'
     },
-    radioButton: {
-        borderRadius: 3,
-        width: 25,
-        height: 25,
-        backgroundColor: '#F6F6F6',
-        borderWidth: 1,
-        borderColor: '#E8E8E8'
+    qr_overlay__container: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        backgroundColor: 'rgba(0,0,0,.3)'
     }
 })
 
