@@ -23,11 +23,14 @@ import ru.fintechwizards.finwiz.services.AccountService;
 @CrossOrigin
 @Tag(name = "Контроллер личного счёта",description = "Методы позволяют управлять и получать данные о счетах пользователя")
 public class AccountController {
-  @Autowired
-  private AccountService accountService;
+  private final AccountService accountService;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
+
+  public AccountController(AccountService accountService, ObjectMapper objectMapper) {
+    this.accountService = accountService;
+    this.objectMapper = objectMapper;
+  }
 
   @GetMapping("/account/all")
   @Operation(

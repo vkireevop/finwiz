@@ -26,8 +26,11 @@ import ru.fintechwizards.finwiz.services.BanksService;
 @Tag(name = "Контроллер банков",description = "Методы позволяют управлять банками")
 public class BanksController {
 
-  @Autowired
-  private BanksService banksService;
+  private final BanksService banksService;
+
+  public BanksController(BanksService banksService) {
+    this.banksService = banksService;
+  }
 
   @PostMapping("/banks/create")
   @Operation(

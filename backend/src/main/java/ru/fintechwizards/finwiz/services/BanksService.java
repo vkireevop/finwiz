@@ -39,7 +39,7 @@ public class BanksService {
             Bank bankEntity = bank.get();
             return new BankResponse(bankEntity.getBankId(),
                 bankEntity.getName(),
-                bankEntity.getAddress());
+                bankEntity.getCountry());
         }
         throw new NotFoundException("Bank not found");
     }
@@ -53,6 +53,6 @@ public class BanksService {
         }
         Bank bank = new Bank(name, address);
         bankRep.save(bank);
-        return new BankResponse(bank.getBankId(), bank.getName(), bank.getAddress());
+        return new BankResponse(bank.getBankId(), bank.getName(), bank.getCountry());
     }
 }

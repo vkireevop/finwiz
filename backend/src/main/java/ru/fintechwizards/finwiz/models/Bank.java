@@ -31,11 +31,11 @@ public class Bank {
         this.name = name;
     }
 
-    public String getAddress() {
+    public String getCountry() {
         return country;
     }
 
-    public void setAddress(String address) {
+    public void setCountry(String address) {
         this.country = address;
     }
 }

@@ -19,8 +19,11 @@ import ru.fintechwizards.finwiz.services.CurrencyService;
 @CrossOrigin
 @Tag(name = "Контроллер валюты",description = "Методы позволяют получать курс валют")
 public class CurrencyController {
-  @Autowired
-  private ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
+
+  public CurrencyController(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
+  }
 
   @GetMapping("exchange/{code}")
   @Operation(

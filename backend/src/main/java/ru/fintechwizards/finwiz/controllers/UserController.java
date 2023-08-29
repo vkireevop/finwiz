@@ -21,10 +21,14 @@ import ru.fintechwizards.finwiz.services.UserService;
 @CrossOrigin
 @Tag(name = "Контроллер пользователя",description = "Методы позволяют управлять данными пользователя")
 public class UserController {
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private ObjectMapper objectMapper;
+  private final UserService userService;
+  private final ObjectMapper objectMapper;
+
+  public UserController(UserService userService, ObjectMapper objectMapper) {
+    this.userService = userService;
+    this.objectMapper = objectMapper;
+  }
+
   @GetMapping("/user")
   @Operation(
           summary = "Данные пользователя",

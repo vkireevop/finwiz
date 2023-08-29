@@ -33,27 +33,30 @@ import ru.fintechwizards.finwiz.services.UserService;
 @Tag(name = "Контроллер аутентификации",description = "Методы позволяют войти или зарегистрироваться в системе")
 public class AuthController {
 
-  @Autowired
-  private UserJpaRepository userRepository;
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private AuthenticationManager authenticationManager;
+  private final UserJpaRepository userRepository;
+  private final UserService userService;
+  private final AuthenticationManager authenticationManager;
 
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  @Autowired
-  private TokenService tokenService;
+  private final TokenService tokenService;
 
-  @Autowired
-  private MyUserDetailsService myUserDetailsService;
+  private final MyUserDetailsService myUserDetailsService;
 
-  @Autowired
-  private AccountService accountService;
+  private final AccountService accountService;
 
-  @Autowired
-  private BanksService banksService;
+  private final BanksService banksService;
+
+  public AuthController(UserJpaRepository userRepository, UserService userService, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder, TokenService tokenService, MyUserDetailsService myUserDetailsService, AccountService accountService, BanksService banksService) {
+    this.userRepository = userRepository;
+    this.userService = userService;
+    this.authenticationManager = authenticationManager;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.tokenService = tokenService;
+    this.myUserDetailsService = myUserDetailsService;
+    this.accountService = accountService;
+    this.banksService = banksService;
+  }
 
   @PostMapping("/auth/login")
   @Operation(

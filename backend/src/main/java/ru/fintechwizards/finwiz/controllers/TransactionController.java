@@ -5,10 +5,11 @@ import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import ru.fintechwizards.finwiz.exceptions.NotEnoughException;
 import ru.fintechwizards.finwiz.models.Transaction;
 import ru.fintechwizards.finwiz.requests.TransactionRequest;
@@ -18,8 +19,11 @@ import ru.fintechwizards.finwiz.services.TransactionService;
 @CrossOrigin
 @Tag(name = "Контроллер транзакций",description = "Методы позволяют управлять транзакциями")
 public class TransactionController {
-  @Autowired
-  private TransactionService transactionService;
+  private final TransactionService transactionService;
+
+  public TransactionController(TransactionService transactionService) {
+    this.transactionService = transactionService;
+  }
 
   @PostMapping("/transaction/make")
   @Operation(
@@ -36,7 +40,7 @@ public class TransactionController {
     }
   }
 
-  @PostMapping("/transaction/all")
+  @GetMapping("/transaction/all")
   @Operation(
           summary = "Все транзакции аккаунта",
           description = "Позволяет получить все транзакции счёта"
