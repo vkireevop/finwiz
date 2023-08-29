@@ -12,9 +12,6 @@ public class CentralBank {
     }
     public boolean buyCurrency(Account account, BigDecimal amount, String currency) {
 
-        BigDecimal currentBalance = account.getBalance();
-        BigDecimal newBalance = currentBalance.subtract(amount);
-        account.setBalance(newBalance);
 
         return true;
     }
