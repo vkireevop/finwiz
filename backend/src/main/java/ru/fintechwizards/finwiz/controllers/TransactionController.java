@@ -1,14 +1,14 @@
 package ru.fintechwizards.finwiz.controllers;
 
 import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.fintechwizards.finwiz.exceptions.NotEnoughException;
+import ru.fintechwizards.finwiz.models.Transaction;
 import ru.fintechwizards.finwiz.requests.TransactionRequest;
 import ru.fintechwizards.finwiz.services.TransactionService;
 
@@ -26,5 +26,10 @@ public class TransactionController {
     } catch (NotEnoughException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+  }
+  @GetMapping("/transaction/allTrans")
+  public ResponseEntity<List<Transaction>> allTransactionForUser(@RequestBody Long id)
+  {
+    return ResponseEntity.ok(transactionService.findAllSenderId(id));
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fintechwizards.finwiz.exceptions.NotEnoughException;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Account;
+import ru.fintechwizards.finwiz.models.CentralBank;
 import ru.fintechwizards.finwiz.models.Transaction;
 import ru.fintechwizards.finwiz.repositories.AccountRepository;
 import ru.fintechwizards.finwiz.repositories.TransactionRepository;
@@ -51,17 +52,18 @@ public class TransactionService {
         Transaction transaction = new Transaction(request.getCurrencyStart(),request.getCurrencyFinal(),
                 senderAccount.get(),receiverAccount.get(),
                 request.getAmount(),request.getDate(),request.getDescription());
-
-        if (currencyFinal.equals(currencyStart))
+        if (currencyFinal.equals(currencyStart) && CentralBank.getInstance().buyCurrency(senderAccount.get(),
+                amount,currencyStart) )
         {
             senderAccount.get().debit(amount);
             receiverAccount.get().credit(amount);
         }
-        else {
+        else if (CentralBank.getInstance().buyCurrency(senderAccount.get(), amount,currencyStart)) {
             senderAccount.get().debit(amount);
             float rateStart = CurrencyService.getExchangeRate(currencyStart);
             float rateFinal = CurrencyService.getExchangeRate(currencyFinal);
-            receiverAccount.get().credit(amount.divide(BigDecimal.valueOf(rateStart)).multiply(BigDecimal.valueOf(rateFinal)));
+            receiverAccount.get().credit(amount.divide(BigDecimal.valueOf(rateStart)).multiply(
+                    BigDecimal.valueOf(rateFinal)));
         }
         transactionRep.save(transaction);
         accountRepository.save(senderAccount.get());
