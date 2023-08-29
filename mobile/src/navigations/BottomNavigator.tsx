@@ -1,4 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { RootState } from '../api/store';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 import {
@@ -35,21 +39,8 @@ const BottomNavigator = () => {
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (
                     focused 
-                        ? <Icon name='credit-card' color='#4B947E' size={18} /> 
-                        : <Icon name='credit-card' color='#000' size={18} />
-                )
-            }}
-        />
-        <Tab.Screen
-            name="Settings" 
-            component={HomeScreen}
-            options={{
-                tabBarShowLabel: false,
-                headerShown: false,
-                tabBarIcon: ({ focused }) => (
-                    focused 
-                        ? <Icon name='gear' color='#4B947E' size={24} /> 
-                        : <Icon name='gear' color='#000' size={24} />
+                        ? <Icon name='gear' color='#4B947E' size={18} /> 
+                        : <Icon name='gear' color='#000' size={18} />
                 )
             }}
         />
