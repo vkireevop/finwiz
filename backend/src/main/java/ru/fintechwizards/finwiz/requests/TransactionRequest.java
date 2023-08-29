@@ -2,7 +2,6 @@ package ru.fintechwizards.finwiz.requests;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import ru.fintechwizards.finwiz.models.Account;
 
 public class TransactionRequest {
   private String currencyStart;

@@ -1,0 +1,37 @@
+{
+  "warnings": [
+    {
+      "FileName": "",
+      "ErrorCode": "",
+      "Message": "An exception occurred while checking the license \r\nException Class: PvsStudioException \r\nException Message: \r\nUnable to unzip PVS-Studio Core. \r\ncom.pvsstudio.PvsStudioException: Unable to unzip PVS-Studio Core.\r\n\tat com.pvsstudio.PvsStudioDownloader.installCore(PvsStudioDownloader.java:_)\r\n\tat com.pvsstudio.PvsStudioDownloader.initCore(PvsStudioDownloader.java:_)\r\n\tat com.pvsstudio.intellij.ui.PvsStudioSettingsForm$LicenseCheckWorker.doInBackground(PvsStudioSettingsForm.java:_)\r\n\tat com.pvsstudio.intellij.ui.PvsStudioSettingsForm$LicenseCheckWorker.doInBackground(PvsStudioSettingsForm.java:_)\r\n\tat java.desktop/javax.swing.SwingWorker$_.call(SwingWorker.java:_)\r\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:_)\r\n\tat java.desktop/javax.swing.SwingWorker.run(SwingWorker.java:_)\r\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:_)\r\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:_)\r\n\tat java.base/java.lang.Thread.run(Thread.java:_)\r\nCaused by: java.io.EOFException: Unexpected end of ZLIB input stream\r\n\tat java.base/java.util.zip.ZipFile$ZipFileInflaterInputStream.fill(ZipFile.java:_)\r\n\tat java.base/java.util.zip.InflaterInputStream.read(InflaterInputStream.java:_)\r\n\tat java.base/java.io.FilterInputStream.read(FilterInputStream.java:_)\r\n\tat org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:_)\r\n\tat org.apache.commons.io.IOUtils.copy(IOUtils.java:_)\r\n\tat org.apache.commons.io.IOUtils.copyLarge(IOUtils.java:_)\r\n\tat org.apache.commons.io.IOUtils.copy(IOUtils.java:_)\r\n\tat com.pvsstudio.PvsStudioDownloader.installCore(PvsStudioDownloader.java:_)\r\n\t... _ more",
+      "CodePrev": 0,
+      "CodeCurrent": 0,
+      "CodeNext": 0
+    },
+    {
+      "FileName": "",
+      "ErrorCode": "",
+      "Message": "Congratulations! PVS-Studio has not found any issues in your source code!",
+      "CodePrev": 0,
+      "CodeCurrent": 0,
+      "CodeNext": 0
+    },
+    {
+      "FileName": "",
+      "ErrorCode": "Renew",
+      "Message": "Your license will expire in _ days. Click \u0027Renew\u0027 to learn more or contact us at support@viva_.com.",
+      "CodePrev": 0,
+      "CodeCurrent": 0,
+      "CodeNext": 0
+    },
+    {
+      "FileName": "",
+      "ErrorCode": "",
+      "Message": "An exception occurred while checking the license \r\nException Class: PvsStudioCoreStartupException \r\nException Message: \r\nFailed to run analyzer core (return code _). Make sure the correct _-bit Java _ or higher executable is used, or specify it manually. \r\ncom.pvsstudio.PvsStudioCoreStartupException: Failed to run analyzer core (return code _). Make sure the correct _-bit Java _ or higher executable is used, or specify it manually.\r\n\tat com.pvsstudio.PvsStudioInvoker.run(PvsStudioInvoker.java:_)\r\n\tat com.pvsstudio.PvsStudioInvoker.runAnalyzerCoreProcess(PvsStudioInvoker.java:_)\r\n\tat com.pvsstudio.PvsStudioInvoker.runAnalyzerCoreProcessWithEmptyJsonProject(PvsStudioInvoker.java:_)\r\n\tat com.pvsstudio.PvsStudioInvoker.checkLicense(PvsStudioInvoker.java:_)\r\n\tat com.pvsstudio.intellij.ui.PvsStudioSettingsForm$LicenseCheckWorker.doInBackground(PvsStudioSettingsForm.java:_)\r\n\tat com.pvsstudio.intellij.ui.PvsStudioSettingsForm$LicenseCheckWorker.doInBackground(PvsStudioSettingsForm.java:_)\r\n\tat java.desktop/javax.swing.SwingWorker$_.call(SwingWorker.java:_)\r\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:_)\r\n\tat java.desktop/javax.swing.SwingWorker.run(SwingWorker.java:_)\r\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:_)\r\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:_)\r\n\tat java.base/java.lang.Thread.run(Thread.java:_)",
+      "CodePrev": 0,
+      "CodeCurrent": 0,
+      "CodeNext": 0
+    }
+  ],
+  "version": 1
+}

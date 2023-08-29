@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +22,6 @@ public class User implements UserDetails {
 
   @Column(name = "password")
   private String password;
-
-  @OneToMany(mappedBy = "user")
-  private List<Account> accounts;
 
   public User() {
 

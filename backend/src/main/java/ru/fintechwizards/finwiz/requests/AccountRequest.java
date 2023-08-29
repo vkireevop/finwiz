@@ -1,11 +1,6 @@
 package ru.fintechwizards.finwiz.requests;
 
-import ru.fintechwizards.finwiz.models.Bank;
-import ru.fintechwizards.finwiz.models.User;
-
 import java.math.BigDecimal;
-
-
 public class AccountRequest {
 
     private Long accountId;

@@ -1,0 +1,28 @@
+{
+  "threads": 8,
+  "incremental": true,
+  "runJavaWithAddOpensForReflectiveAccess": false,
+  "verbose": false,
+  "sourcetree-root": "C:/Users/vadim/IdeaProjects/finwiz/.PVS-Studio",
+  "disable-cache": false,
+  "exclude": [],
+  "include-generated": false,
+  "fail-on-warnings": false,
+  "analysis-mode": [
+    "GA"
+  ],
+  "launch-mode": "CORE",
+  "disabled-warnings": [],
+  "enabled-warnings": [],
+  "additional-warnings": [],
+  "benchmark": false,
+  "java": "java",
+  "jvm-arguments": [
+    "-Xss64m"
+  ],
+  "suppress-base": ".PVS-Studio/suppress_base.json",
+  "timeout": 10,
+  "logging": "OFF",
+  "compatibility": false,
+  "exclude-packages": []
+}

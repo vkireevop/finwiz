@@ -35,8 +35,7 @@ public class UserService {
       throw new NotFoundException("User not found");
     }
     User userEntity = user.get();
-    UserInfoResponse response = new UserInfoResponse(userEntity.getId(),userEntity.getUsername(),
+    return new UserInfoResponse(userEntity.getId(),userEntity.getUsername(),
         userEntity.isEnabled(), accountService.findAccountsByUserId(userEntity.getId()));
-    return response;
   }
 }

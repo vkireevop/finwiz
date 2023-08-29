@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fintechwizards.finwiz.exceptions.NotFoundException;
 import ru.fintechwizards.finwiz.models.Account;
-import ru.fintechwizards.finwiz.models.User;
 import ru.fintechwizards.finwiz.repositories.AccountRepository;
 
 import java.util.Optional;
@@ -38,8 +37,7 @@ public class AccountService {
     }
 
     public List<Account> findAccountsByUserId(Long id) {
-        List<Account> accountList = accRepo.findAllByUser(id);
-        return accountList;
+        return accRepo.findAllByUser(id);
     }
 
     public void createAccount(AccountRequest account) {
