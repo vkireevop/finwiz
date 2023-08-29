@@ -2,6 +2,9 @@ package ru.fintechwizards.finwiz.controllers;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,7 @@ import ru.fintechwizards.finwiz.services.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
+@Tag(name = "Контроллер аутентификации",description = "Методы позволяют войти или зарегистрироваться в системе")
 public class AuthController {
 
   @Autowired
@@ -52,6 +56,10 @@ public class AuthController {
   private BanksService banksService;
 
   @PostMapping("/auth/login")
+  @Operation(
+          summary = "Аутентификация",
+          description = "Аутентифицирует зарегистрированного пользователя"
+  )
   public ResponseEntity<AuthResponse> auth(@RequestBody AuthRequest authRequest) {
     String username = authRequest.getUsername();
     String password = authRequest.getPassword();
@@ -68,6 +76,10 @@ public class AuthController {
   }
 
   @PostMapping("auth/signup")
+  @Operation(
+          summary = "Регистрация",
+          description = "Позволяет зарегистрировать нового пользователя"
+  )
   public ResponseEntity<Object> signup(@RequestBody AuthRequest authRequest) {
     String username = authRequest.getUsername();
     String password = authRequest.getPassword();

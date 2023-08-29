@@ -4,6 +4,9 @@ package ru.fintechwizards.finwiz.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Principal;
 import java.util.Optional;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +19,17 @@ import ru.fintechwizards.finwiz.services.UserService;
 
 @RestController
 @CrossOrigin
+@Tag(name = "Контроллер пользователя",description = "Методы позволяют управлять данными пользователя")
 public class UserController {
   @Autowired
   private UserService userService;
   @Autowired
   private ObjectMapper objectMapper;
   @GetMapping("/user")
+  @Operation(
+          summary = "Данные пользователя",
+          description = "Позволяет получить все данные о пользователе"
+  )
   public ResponseEntity<String> getUserInfo(Principal principal) {
     try {
       UserInfoResponse user = userService.getUserInfo(principal);
